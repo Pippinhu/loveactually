@@ -1,0 +1,37 @@
+<!--pages/chooseLib/chooseLib.wxml-->
+<view class="container">
+  <image class="banner"src="{{imgUrl}}"mode="aspectFill"></image>
+  <view wx:if="{{show}}">
+    <view class="group">
+      <block wx:for="{{info}}">
+        <view class="card"style="background-color:{{item.color}}">
+          <view class="card-item">
+            <view class="id"style="color:{{item.color}}">
+              <view>
+              {{item._id_}}
+              </view>
+            </view>
+            <view class="grid">
+              <view>{{item.current||item.sex}}</view>
+              <view class="item">{{item.year}}</view>
+            </view>
+            <view class="grid">
+              <view>身高</view>
+              <view class="item">{{item.high}}</view>
+            </view>
+            <view class="grid">{{item.company}}</view>
+            <view class="grid">
+              <view>推荐人：</view>
+              <view class="item">{{item.recommend}}</view>
+            </view>
+          </view>
+          <image class="icon"src="{{item.icon}}"></image>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="out"bindtap="toForm">
+      <view class="core">点此填写信息</view>
+  </view>
+</view>
+

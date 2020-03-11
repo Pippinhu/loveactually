@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="radio-group">  
+    <view class="sex-text">性别<span class="required">*</span></view>
+    <i-radio-group current="{{current}}" bindchange="handleSexChange">
+      <i-radio i-class="radio-out" wx:for="{{sex}}" position="{{position}}"value="{{item.name}}"wx:key="{{item.id}}">
+      </i-radio>
+    </i-radio-group>
+  </view>
+  <view class="form_section"wx:for="{{list}}">
+    <view class="form_title">{{item.label}}<span wx:if="false" class="required">*</span></view>
+    <view class="form_input">
+      <input bindinput="bindKeyInput"
+      placeholder="请在此输入{{item.label}}"placeholder-style="color:#A9A9A9;line-height:1;min-height: 1;"
+      id="{{item.label}}"
+      />
+    </view>
+  </view>
+  <view class="input_button">
+    <button bindtap="confirm" type="primary">提交</button>
+  </view>
+</view>
+  
+  
