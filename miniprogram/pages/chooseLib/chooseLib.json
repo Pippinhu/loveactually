@@ -1,5 +1,7 @@
 {
   "usingComponents": {
     "van-card": "/dist/card/index"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

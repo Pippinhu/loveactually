@@ -1,16 +1,28 @@
 <view class="container">
-  <view class="radio-group">  
-    <view class="sex-text">性别<span class="required">*</span></view>
-    <i-radio-group current="{{current}}" bindchange="handleSexChange">
-      <i-radio i-class="radio-out" wx:for="{{sex}}" position="{{position}}"value="{{item.name}}"wx:key="{{item.id}}">
-      </i-radio>
-    </i-radio-group>
+  <view wx:if="{{show}}">
+    <view class="radio-group">  
+      <view class="sex-text">性别<span class="required">*</span></view>
+      <i-radio-group current="{{current_sex}}" bindchange="handleSexChange">
+        <i-radio i-class="radio-out" wx:for="{{sex}}" position="{{position}}"value="{{item.name}}"wx:key="{{item.id}}">
+        </i-radio>
+      </i-radio-group>
+    </view>
+    <view class="radio-group">  
+      <view class="sex-text">是否为独生子女</view>
+      <i-radio-group current="{{current_child}}" bindchange="handleChildChange">
+        <i-radio i-class="radio-out" wx:for="{{childList}}" position="{{position}}"value="{{item.name}}"wx:key="{{item.id}}">
+        </i-radio>
+      </i-radio-group>
+    </view>
   </view>
   <view class="form_section"wx:for="{{list}}">
-    <view class="form_title">{{item.label}}<span wx:if="false" class="required">*</span></view>
+    <view class="form_text">
+      <view class="form_title"style="display:inline;">{{item.label}}</view>
+      <view class="required"style="display:inline;"wx:if="{{item.required}}">*</view>
+    </view>
     <view class="form_input">
       <input bindinput="bindKeyInput"
-      placeholder="请在此输入{{item.label}}"placeholder-style="color:#A9A9A9;line-height:1;min-height: 1;"
+      placeholder="{{item.placeholder}}"placeholder-style="color:#A9A9A9;line-height:1;min-height: 1;"
       id="{{item.label}}"
       />
     </view>

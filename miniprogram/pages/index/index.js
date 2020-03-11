@@ -26,11 +26,21 @@ Page({
       {id: 2,
       name: '男孩'}
       ],
+    childList:[
+      {id: 1,
+      name: '是'},
+      {id: 2,
+      name: '否'}
+      ],
     current:'',
+    current_sex:'',
+    current_child:'',
     position:'left',
     color:'',
-    icon:''
-    
+    icon:'',
+    message:'',
+    pic:'',
+    show:''
   },
 
   onLoad: function() {
@@ -46,6 +56,13 @@ Page({
 		info.count().then(res => {
 			this.setData({
         count:res.total
+      })
+    })
+		const share = db.collection('share')
+		share.get().then(res => {
+      this.setData({
+        message:res.data[0].message,
+        pic:res.data[0].pic
       })
     })
   
@@ -91,35 +108,31 @@ Page({
   bindKeyInput(event) {
     // event.detail 为当前输入的
     let label=event.currentTarget.id
-    if(label=='姓名'){
+    if(label==this.data.list[0].label){
       this.setData({
         name:event.detail.value
       })
-    }else if(label=='出生年份'){
+    }else if(label==this.data.list[1].label){
       this.setData({
         year:event.detail.value
       })
-    }else if(label=='身高'){
+    }else if(label==this.data.list[2].label){
       this.setData({
         high:event.detail.value
       })
-    }else if(label=='学历'){
+    }else if(label==this.data.list[3].label){
       this.setData({
         school:event.detail.value
       })
-    }else if(label=='是否为独生子女'){
-      this.setData({
-        child:event.detail.value
-      })
-    }else if(label=='单位'){
+    }else if(label==this.data.list[4].label){
       this.setData({
         company:event.detail.value
       })
-    }else if(label=='对男女方要求'){
+    }else if(label==this.data.list[5].label){
       this.setData({
         require:event.detail.value
       })
-    }else if(label=='推荐人微信名'){
+    }else if(label==this.data.list[6].label){
       this.setData({
         recommend:event.detail.value
       })
@@ -134,16 +147,17 @@ Page({
       name: this.data.name,
       high: this.data.high,
       year: this.data.year,
-      child: this.data.child,
+      child: this.data.current_child,
       company: this.data.company,
       require: this.data.require,
-      current:this.data.current,
+      current:this.data.current_sex,
       recommend:this.data.recommend,
       color:this.data.color,
       icon:this.data.icon,
       _id_:this.data.id
     }
-    if(this.data.name!==undefined&&this.data.current!==undefined&&this.data.high!==undefined&&this.data.year!==undefined&&this.data.company!==undefined&&this.data.recommend!==undefined){
+    if(this.data.name!==undefined&&    this.data.current!==undefined&&this.data.high!==undefined&&
+      this.data.year!==undefined&&this.data.company!==undefined&&this.data.recommend!==undefined){
       info.add({
         data:data
       }).then(res => {
@@ -166,7 +180,7 @@ Page({
 
   handleSexChange({ detail = {} }) {
     this.setData({
-      current: detail.value
+      current_sex: detail.value
     });
     if(detail.value==="女孩"){
       this.setData({
@@ -179,6 +193,12 @@ Page({
         icon:'/images/male.png'
       })
     }
+  },
+
+  handleChildChange({ detail = {} }) {
+    this.setData({
+      current_child: detail.value
+    });
   },
 
   onGetOpenid: function() {
@@ -201,11 +221,21 @@ Page({
       }
     })
   },
-
-  onShareAppMessage: function () {
-    return {
-      title: '单身男女来登记！',
-      imageUrl: '/images/share.jpg'
-    }
+  
+  onShow: function () {
+    const db = wx.cloud.database()
+    const showPage=db.collection('show')
+    showPage.get().then(res=>{
+      this.setData({
+        show:res.data[0].show
+      })
+    })
   },
+
+  onShareAppMessage: function (res) {
+    return {
+      title: this.data.message,
+      imageUrl:this.data.pic,
+    }
+  }
 })

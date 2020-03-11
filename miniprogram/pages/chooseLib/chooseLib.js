@@ -10,7 +10,16 @@ Page({
   },
 
   onLoad: function () {
+    const db = wx.cloud.database()
     this.getAllinfo()
+    wx.stopPullDownRefresh()
+    const share = db.collection('share')
+		share.get().then(res => {
+      this.setData({
+        message:res.data[1].message,
+        pic:res.data[1].pic
+      })
+    })
   },
 
   toForm:function(){
@@ -103,10 +112,14 @@ Page({
     }
   },
 
-  onShareAppMessage: function () {
-    return {
-      title: '单身男女前来登记',
-      imageUrl: '/images/share.jpg'
-    }
+  onPullDownRefresh: function () {
+    this.onLoad(); //重新加载onLoad()
   },
+
+  onShareAppMessage: function (res) {
+    return {
+      title: this.data.message,
+      imageUrl:this.data.pic,
+    }
+  }
 })
