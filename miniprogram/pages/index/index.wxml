@@ -27,8 +27,8 @@
       />
     </view>
   </view>
-  <view class="input_button">
-    <button bindtap="confirm" type="primary">提交</button>
+  <view class="input_button"bindtap="confirm">
+    <button type="primary">提交</button>
   </view>
 </view>
   

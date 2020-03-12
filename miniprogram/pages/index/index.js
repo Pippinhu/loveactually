@@ -156,7 +156,7 @@ Page({
       icon:this.data.icon,
       _id_:this.data.id
     }
-    if(this.data.name!==undefined&&    this.data.current!==undefined&&this.data.high!==undefined&&
+    if(this.data.name!==undefined&&this.data.current!==undefined&&this.data.high!==undefined&&
       this.data.year!==undefined&&this.data.company!==undefined&&this.data.recommend!==undefined){
       info.add({
         data:data
