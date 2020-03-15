@@ -45,21 +45,21 @@ Page({
 
   onLoad: function() {
     const db = wx.cloud.database()
-		const list = db.collection('list')
-		list.get().then(res => {
+    const list = db.collection('list')
+    list.get().then(res => {
       this.setData({
         list:res.data
       })
     })
-		const info = db.collection('info')
+    const info = db.collection('info')
     //数据总数
-		info.count().then(res => {
-			this.setData({
+    info.count().then(res => {
+    this.setData({
         count:res.total
       })
     })
-		const share = db.collection('share')
-		share.get().then(res => {
+    const share = db.collection('share')
+    share.get().then(res => {
       this.setData({
         message:res.data[0].message,
         pic:res.data[0].pic

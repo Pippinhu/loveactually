@@ -1,4 +1,3 @@
-
 Page({
   data: {
     info:[],
@@ -14,7 +13,7 @@ Page({
     this.getAllinfo()
     wx.stopPullDownRefresh()
     const share = db.collection('share')
-		share.get().then(res => {
+    share.get().then(res => {
       this.setData({
         message:res.data[1].message,
         pic:res.data[1].pic
@@ -36,16 +35,16 @@ Page({
         imgUrl:res.data[0].imgUrl
       })
     })
-		const info = db.collection('info')
-		// 获取数据总数
-		info.count().then(res => {
+    const info = db.collection('info')
+    // 获取数据总数
+    info.count().then(res => {
       this.setData({
         totalCount: res.total
       })
-		}).catch(err => {
-			console.error(err)
-		})
-		try{ 
+    }).catch(err => {
+      console.error(err)
+    })
+    try{ 
       info.limit(15)
           .orderBy('_id_', 'asc')
           .get()
@@ -76,39 +75,38 @@ Page({
   },
 
   onReachBottom:function () {
-		const db = wx.cloud.database()
-		const info = db.collection('info')
-		let temp = [];
-		let length = this.data.info.length
-		if (length < this.data.totalCount) {
-			try {
-				info.skip(length)
-						 .limit(10)
-						 .orderBy('_id_', 'asc')
-						 .get().then(res => {
-								if (res.data.length > 0) {
-									for (let i = 0; i < res.data.length; i++) {
-									temp.push(res.data[i])
-								}
+    const db = wx.cloud.database()
+    const info = db.collection('info')
+    let temp = [];
+    let length = this.data.info.length
+    if (length < this.data.totalCount) {
+      try {
+        info.skip(length)
+            .limit(10)
+            .orderBy('_id_', 'asc')
+             .get().then(res => {
+                if (res.data.length > 0) {
+                for (let i = 0; i < res.data.length; i++) {
+              }
               
               this.setData({
                 info:this.data.info.concat(temp)
               })
-						} else {
-							wx.showToast({
-								title:"没有更多啦"
-							})
-						}
-					}).catch(err => {
-						console.error(err)
-					})
-			} catch(err) {
-				console.error(err)
-			}
-		} else {
-			wx.showToast({
-				title:"没有更多啦"
-			})
+          } else {
+              wx.showToast({
+                title:"没有更多啦"
+              })
+           }
+          }).catch(err => {
+            console.error(err)
+          })
+      } catch(err) {
+        console.error(err)
+      }
+    } else {
+      wx.showToast({
+      title:"没有更多啦"
+      })
     }
   },
 
